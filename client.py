@@ -15,6 +15,7 @@ except:
     exit(1)
 
 nickname = input("Choose your nickname: ")
+room = input("Give name of the room: ")
 print("whisper name message: message privately in chat")
 print("exit: exit from the chat")
 
@@ -24,8 +25,10 @@ def receive():
         try:
             message = s.recv(1024).decode('ascii')
 
-            if message == 'Nickname':
+            if message == 'NICK':
                 s.send(nickname.encode('ascii'))
+            elif message == 'ROOM':
+                s.send(room.encode('ascii'))
             else:
                 print(message)
 
@@ -53,6 +56,7 @@ def write():
         message = "{}: {}".format(nickname, data)
 
         if(x[0] == "whisper"):
+            
             message = "{} {} {}: {}".format(x[0], x[1], nickname, x[2])
         
         try:
